@@ -5,28 +5,25 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_gravity="left"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity"
+    tools:openDrawer="start">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activity body !"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navView"
-        android:layout_width="match_parent"
+        android:layout_marginTop="64dp"
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="left"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

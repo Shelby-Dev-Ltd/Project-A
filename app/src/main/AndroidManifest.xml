@@ -14,9 +14,6 @@
         android:theme="@style/Theme.ProjectA"
         tools:targetApi="31" >
         <activity
-            android:name=".userprofile"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
