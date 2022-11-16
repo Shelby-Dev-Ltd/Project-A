@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ProjectA</string>
+    <string name="stop">stop</string>
+    <string name="start">start</string>
+    <string name="empty_recycler_text">No Detection Data Stored</string>
+    <string name="service_runnng">Detection Service is running</string>
+    <string name="close">Close</string>
+    <string name="fall_detected">Fall Detected</string>
+    <string name="fall_detect_content">Fall detected with duration : %s seconds</string>
+    <string name="duration_item">Duration : %s second(s)</string>
 </resources>

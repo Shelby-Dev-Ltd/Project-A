@@ -43,6 +43,13 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener, TextToSpeech.OnI
     private lateinit var btnSpeak: Button
     private lateinit var button: Button
     private lateinit var btnLocation: Button
+    private lateinit var btnStartTimer: Button
+    private lateinit var btnResetTimer: Button
+    private lateinit var timerTV: TextView
+    private lateinit var dataHelper: DataHelper
+    private lateinit var btnFall: Button
+
+    private val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +63,34 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener, TextToSpeech.OnI
         country = findViewById(R.id.country)
         city = findViewById(R.id.city)
         address = findViewById(R.id.address)
+        btnStartTimer = findViewById(R.id.btnStartTimer)
+        btnResetTimer = findViewById(R.id.btnResetTimer)
+        timerTV = findViewById(R.id.timer)
+        btnFall = findViewById(R.id.btn3)
+
+        dataHelper = DataHelper(applicationContext)
+
+        btnStartTimer.setOnClickListener { startStopAction() }
+        btnResetTimer.setOnClickListener { resetAction() }
+
+        btnFall.setOnClickListener {
+            val intent = Intent(this, MainActivity3::class.java)
+            startActivity(intent)
+        }
+
+        if(dataHelper.timerCounting()) {
+            startTimer()
+        }
+        else {
+            stopTimer()
+            if(dataHelper.startTime() != null && dataHelper.stopTime() != null) {
+                val time = Date().time - calcRestartTime().time
+                timerTV.text = timeStringFromLong(time)
+
+            }
+        }
+
+        timer.scheduleAtFixedRate(TimeTask(), 0,500)
 
 
         btnSpeak!!.isEnabled = false
@@ -79,6 +114,70 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener, TextToSpeech.OnI
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private inner class TimeTask: TimerTask() {
+        override fun run() {
+            if(dataHelper.timerCounting()) {
+                val time = Date().time - dataHelper.startTime()!!.time
+
+                runOnUiThread(java.lang.Runnable {
+                    timerTV.text = timeStringFromLong(time)
+                })
+            }
+        }
+    }
+
+    private fun resetAction() {
+        dataHelper.setStopTime(null)
+        dataHelper.setStartTime(null)
+        stopTimer()
+        timerTV.text = timeStringFromLong(0)
+    }
+
+    private fun timeStringFromLong(ms: Long): String {
+        val seconds = (ms / 1000) % 60
+        val minutes = (ms / (1000 * 60) % 60)
+        val hours  = (ms / (1000 * 60 * 60) % 24)
+        return makeTimeString (hours, minutes, seconds)
+    }
+
+    private fun makeTimeString(hours: Long, minutes: Long, seconds: Long): String {
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    }
+
+    private fun stopTimer() {
+        dataHelper.setTimerCounting(false)
+        btnStartTimer.text = getString(R.string.start)
+    }
+
+    private fun startTimer() {
+        dataHelper.setTimerCounting(true)
+        btnStartTimer.text = getString(R.string.stop)
+    }
+
+
+    private fun startStopAction() {
+        if(dataHelper.timerCounting()) {
+            dataHelper.setStopTime(Date())
+            stopTimer()
+        }
+        else {
+            if(dataHelper.stopTime() != null) {
+                dataHelper.setStartTime(calcRestartTime())
+                dataHelper.setStopTime(null)
+            }
+            else {
+                dataHelper.setStartTime(Date())
+            }
+            startTimer()
+        }
+    }
+
+    private fun calcRestartTime(): Date {
+        val diff = dataHelper.startTime()!!.time - dataHelper.stopTime()!!.time
+        return Date(System.currentTimeMillis() + diff)
     }
 
     override fun onDestroy() {
@@ -115,7 +214,8 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener, TextToSpeech.OnI
                     val location: Location? = task.result
                     if (location != null) {
                         val geocoder = Geocoder(this, Locale.getDefault())
-                        val list: List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                        val list: List<Address> =
+                            geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         apply {
                             latitude.text = "Latitude: \n${list[0].latitude}"
                             longitude.text = "Longitude: \n${list[0].longitude}"

@@ -5,6 +5,9 @@
       <map>
         <entry key="..\:/ProjectA/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/ProjectA/app/src/main/res/layout/activity_main2.xml" value="0.25" />
+        <entry key="..\:/ProjectA/app/src/main/res/layout/activity_main3.xml" value="0.1" />
+        <entry key="..\:/ProjectA/app/src/main/res/layout/adapter_detection_item.xml" value="0.1" />
+        <entry key="..\:/ProjectA/falldetectionlib/src/main/res/layout/activity_main.xml" value="0.11018518518518519" />
       </map>
     </option>
   </component>
