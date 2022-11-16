@@ -10,7 +10,8 @@
         <item
             android:id="@+id/secondItem"
             android:icon="@drawable/icon_user"
-            android:title="User" />
+            android:title="User"
+            />
         <item
             android:id="@+id/thirdItem"
             android:title="Third Item" />

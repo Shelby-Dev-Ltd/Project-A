@@ -4,11 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/drawable/icon_home.xml" value="0.1755" />
+        <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/drawable/rounded.xml" value="0.192" />
         <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/layout/activity_main.xml" value="0.14" />
         <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/layout/activity_userprofile.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/layout/app_bar_main.xml" value="0.184375" />
         <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/layout/fragment_user_profile.xml" value="0.3509963768115942" />
+        <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/layout/fragment_user_profile.xml" value="0.33" />
+        <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/layout/nav_header.xml" value="0.3625" />
         <entry key="..\:/Users/kenna/AndroidStudioProjects/Project-A/app/src/main/res/menu/nav_menu.xml" value="0.18072916666666666" />
       </map>
     </option>
