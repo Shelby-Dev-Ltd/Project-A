@@ -61,7 +61,7 @@
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/v_nl"
+            android:id="@+id/u_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/img"
@@ -85,10 +85,10 @@
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/v_ttl"
+            android:id="@+id/u_birth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/v_nl"
+            android:layout_below="@+id/u_name"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/ttl"
             android:text="___________"
@@ -108,10 +108,10 @@
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/v_nik"
+            android:id="@+id/u_nik"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/v_ttl"
+            android:layout_below="@+id/u_birth"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/nik"
             android:text="___________"
@@ -131,10 +131,10 @@
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/v_nohp1"
+            android:id="@+id/u_emerg1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/v_nik"
+            android:layout_below="@+id/u_nik"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/no_hp1"
             android:text="___________"
@@ -155,10 +155,10 @@
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/v_nohp2"
+            android:id="@+id/u_emerg2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/v_nohp1"
+            android:layout_below="@+id/u_emerg1"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/no_hp2"
             android:text="___________"
@@ -175,11 +175,12 @@
             android:inputType="text"
             android:textAlignment="center"
             android:textSize="16dp" />
+
         <TextView
-            android:id="@+id/v_email"
+            android:id="@+id/u_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/v_nohp2"
+            android:layout_below="@+id/u_emerg2"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/email"
             android:text="___________"

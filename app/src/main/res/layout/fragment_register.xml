@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RegisterFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            >
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/text_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Log in"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/projecta_logo_removed" />
+
+            <ImageView
+                android:id="@+id/ic_person"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="270dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/namalengkap"
+                android:src="@drawable/person" />
+
+            <EditText
+                android:id="@+id/u_name"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/logo"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="40dp"
+                android:hint="Nama Lengkap"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/ic_lock"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/ic_person"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/ttl"
+                android:src="@drawable/card" />
+
+            <EditText
+                android:id="@+id/u_birth"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/u_name"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="0dp"
+                android:hint="Tempat, Tanggal Lahir"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/ic_card"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/ic_lock"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/namalengkap"
+                android:src="@drawable/date" />
+
+            <EditText
+                android:id="@+id/u_nik"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/u_birth"
+                android:layout_centerInParent="true"
+                android:hint="NIK"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/ic_no_hp1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/ic_card"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/namalengkap"
+                android:src="@drawable/ic_baseline_phone_android_24" />
+
+            <EditText
+                android:id="@+id/u_emerg1"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/u_nik"
+                android:layout_centerInParent="true"
+                android:hint="Nomor HP orang terdekat 1"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:id="@+id/ic_no_hp2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/ic_no_hp1"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/namalengkap"
+                android:src="@drawable/ic_baseline_phone_android_24" />
+
+            <EditText
+                android:id="@+id/u_emerg2"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/u_emerg1"
+                android:layout_centerInParent="true"
+                android:hint="Nomor HP orang terdekat 2"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:id="@+id/ic_email"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/ic_no_hp2"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/namalengkap"
+                android:src="@drawable/email" />
+
+            <EditText
+                android:id="@+id/u_email"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/u_emerg2"
+                android:layout_centerInParent="true"
+                android:hint="Email"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/ic_password"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/ic_email"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/namalengkap"
+                android:src="@drawable/lock" />
+
+            <EditText
+                android:id="@+id/u_password"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/u_email"
+                android:layout_centerInParent="true"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textAlignment="center"
+                android:textSize="25dp" />
+
+
+            <Button
+                android:id="@+id/btn_signup"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/u_password"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/rounded"
+                android:onClick="signup"
+                android:text="Sign Up" />
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

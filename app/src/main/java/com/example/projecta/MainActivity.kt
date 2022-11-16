@@ -15,6 +15,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.os.Build.VERSION_CODES.P
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -40,6 +41,9 @@ import com.example.projecta.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -59,10 +63,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button: Button
     private lateinit var btnLocation: Button
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize Firebase Auth
+        auth = Firebase.auth
 
 
 
@@ -71,18 +80,23 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        replaceFragment(HomeFragment(), "Home")
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            supportActionBar?.hide()
+            replaceFragment(LoginFragment(), "Login")
+        } else{
+            supportActionBar?.show()
+            replaceFragment(HomeFragment(), "Home")
+        }
         binding.navView.setNavigationItemSelectedListener {
             it.isChecked = true
             replaceFragment(HomeFragment(), it.title.toString())
             when (it.itemId) {
                 R.id.firstItem -> replaceFragment(HomeFragment(), it.title.toString())
                 R.id.secondItem -> replaceFragment(UserProfileFragment(), it.title.toString())
-                R.id.thirdItem -> Toast.makeText(
-                    applicationContext,
-                    "Clicked Settings",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.thirdItem -> {
+                    FirebaseAuth.getInstance().signOut()
+                    replaceFragment(LoginFragment(), it.title.toString())
+                }
             }
             true
         }
