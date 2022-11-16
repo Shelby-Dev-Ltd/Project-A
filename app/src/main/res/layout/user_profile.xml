@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#096ce3"></RelativeLayout>
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/back" />
+
+    <TextView
+        android:id="@+id/text_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:fontFamily="sans-serif-black"
+        android:text="User Profile"
+        android:textSize="15sp" />
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/rounded2"/>
+
+    <TextView
+        android:id="@+id/namalengkap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:inputType="text"
+        android:text="Nama Lengkap                      : "
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/v_nl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@+id/namalengkap"
+        android:text="___________"
+        android:textSize="16dp" />
+
+
+    <TextView
+        android:id="@+id/ttl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/namalengkap"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Tempat, Tanggal Lahir         : "
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/v_ttl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v_nl"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/ttl"
+        android:text="___________"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/nik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ttl"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="NIK                                            : "
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/v_nik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v_ttl"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/nik"
+        android:text="___________"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/no_hp1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nik"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Nomor HP orang terdekat 1: "
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/v_nohp1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v_nik"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/no_hp1"
+        android:text="___________"
+        android:textSize="16dp" />
+
+
+    <TextView
+        android:id="@+id/no_hp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/no_hp1"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Nomor HP orang terdekat 2: "
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/v_nohp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v_nohp1"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/no_hp2"
+        android:text="___________"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/no_hp2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Email                                         : "
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="16dp" />
+    <TextView
+        android:id="@+id/v_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v_nohp2"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/email"
+        android:text="___________"
+        android:textSize="16dp" />
+
+
+</RelativeLayout>
