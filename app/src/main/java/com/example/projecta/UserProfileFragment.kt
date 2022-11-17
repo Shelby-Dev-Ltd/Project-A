@@ -48,20 +48,31 @@ class UserProfileFragment : Fragment() {
 
                 val fullname = it.child("fullname").value
                 val nik = it.child("nik").value
-                val uEmerg1 = it.child("uEmerg1").value
-                val uEmerg2 = it.child("uEmerg2").value
+                val uEmerg1 = it.child("emerg1").value
+                val uEmerg2 = it.child("emerg2").value
                 val email = it.child("email").value
+                val birth = it.child("birth").value
+                val number = it.child("number").value
 //                Toast.makeText(this,"Successfuly Read",Toast.LENGTH_SHORT).show()
                 binding.uName.text = fullname.toString()
                 binding.uNik.text = nik.toString()
                 binding.uEmerg1.text = uEmerg1.toString()
                 binding.uEmerg2.text = uEmerg2.toString()
-                binding.email.text = email.toString()
+                binding.uEmail.text = email.toString()
+                binding.uBirth.text = birth.toString()
+                binding.uNohp.text = number.toString()
 
             }else{
 
                 Toast.makeText(requireActivity(),"User Doesn't Exist", Toast.LENGTH_SHORT).show()
-
+                val error = "No User"
+                binding.uName.text = error
+                binding.uNik.text = error
+                binding.uEmerg1.text = error
+                binding.uEmerg2.text = error
+                binding.uEmail.text = error
+                binding.uBirth.text = error
+                binding.uNohp.text = error
 
             }
 

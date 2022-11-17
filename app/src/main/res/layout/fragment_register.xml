@@ -49,7 +49,8 @@
                 android:id="@+id/ic_person"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="270dp"
+                android:layout_marginTop="255dp"
+                android:layout_marginLeft="45dp"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/namalengkap"
                 android:src="@drawable/person" />
@@ -60,7 +61,7 @@
                 android:layout_height="50dp"
                 android:layout_below="@id/logo"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="25dp"
                 android:hint="Nama Lengkap"
                 android:inputType="text"
                 android:textAlignment="center"
@@ -71,6 +72,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_below="@+id/ic_person"
+                android:layout_marginLeft="45dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/ttl"
@@ -94,6 +96,7 @@
                 android:layout_height="40dp"
                 android:layout_below="@id/ic_lock"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="45dp"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/namalengkap"
                 android:src="@drawable/date" />
@@ -115,6 +118,7 @@
                 android:layout_height="40dp"
                 android:layout_below="@id/ic_card"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="45dp"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/namalengkap"
                 android:src="@drawable/ic_baseline_phone_android_24" />
@@ -137,6 +141,7 @@
                 android:layout_below="@id/ic_no_hp1"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginLeft="45dp"
                 android:layout_toLeftOf="@+id/namalengkap"
                 android:src="@drawable/ic_baseline_phone_android_24" />
 
@@ -158,6 +163,7 @@
                 android:layout_below="@id/ic_no_hp2"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginLeft="45dp"
                 android:layout_toLeftOf="@+id/namalengkap"
                 android:src="@drawable/email" />
 
@@ -179,6 +185,7 @@
                 android:layout_below="@id/ic_email"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginLeft="45dp"
                 android:layout_toLeftOf="@+id/namalengkap"
                 android:src="@drawable/lock" />
 
@@ -193,12 +200,33 @@
                 android:textAlignment="center"
                 android:textSize="25dp" />
 
+            <ImageView
+                android:id="@+id/ic_hp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/ic_password"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="45dp"
+                android:layout_toLeftOf="@+id/namalengkap"
+                android:src="@drawable/ic_baseline_phone_android_24" />
+
+            <EditText
+                android:id="@+id/u_number"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/u_password"
+                android:layout_centerInParent="true"
+                android:hint="No HP"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="25dp" />
 
             <Button
                 android:id="@+id/btn_signup"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/u_password"
+                android:layout_below="@id/u_nohp"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/rounded"

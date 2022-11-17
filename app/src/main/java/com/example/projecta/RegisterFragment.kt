@@ -59,10 +59,11 @@ class RegisterFragment : Fragment() {
         val fullName = binding.uName.text.toString()
         val birth = binding.uBirth.text.toString()
         val nik = binding.uNik.text.toString()
-        val emerg1 = binding.uEmerg1.toString()
-        val emerg2 = binding.uEmerg2.toString()
+        val emerg1 = binding.uEmerg1.text.toString()
+        val emerg2 = binding.uEmerg2.text.toString()
         val email = binding.uEmail.text.toString()
         val password = binding.uPassword.text.toString()
+        val number = binding.uNumber.text.toString()
 
 
 
@@ -84,7 +85,7 @@ class RegisterFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                performSignUp(fullName, birth, nik, emerg1, emerg2, email, password)
+                performSignUp(fullName, birth, nik, emerg1, emerg2, email, password, number)
 //                val uid = auth.uid
 //                val database = FirebaseDatabase.getInstance().getReference("users")
 //                val userInfo:HashMap<String,Any?> = HashMap()
@@ -110,9 +111,9 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun saveUserInfo(uid: String, fullname: String, birth: String, nik: String,emerg1: String,emerg2: String,email: String) {
+    private fun saveUserInfo(uid: String, fullname: String, birth: String, nik: String,emerg1: String,emerg2: String,email: String, number: String) {
         rdb = FirebaseDatabase.getInstance().getReference("Users")
-        val newUser = newUser(uid, fullname, birth, nik, emerg1, emerg2, email)
+        val newUser = newUser(uid, fullname, birth, nik, emerg1, emerg2, email, number)
         rdb.child(uid).setValue(newUser).addOnSuccessListener {
             Toast.makeText(requireContext(), " Succesfully saved! ", Toast.LENGTH_SHORT).show()
         }
@@ -121,7 +122,7 @@ class RegisterFragment : Fragment() {
             }
     }
 
-    private fun performSignUp(fullname: String, birth: String, nik: String, emerg1: String, emerg2:String, email: String, password:String) {
+    private fun performSignUp(fullname: String, birth: String, nik: String, emerg1: String, emerg2:String, email: String, password:String, number: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
@@ -130,7 +131,7 @@ class RegisterFragment : Fragment() {
                     //save user info
                     val currUser = auth.currentUser
                     val currUid = currUser?.uid
-                    saveUserInfo(currUid.toString(), fullname, birth, nik, emerg1, emerg2, email)
+                    saveUserInfo(currUid.toString(), fullname, birth, nik, emerg1, emerg2, email, number)
 //                    Toast.makeText(this, " ${currUid} ",Toast.LENGTH_SHORT).show()
 
                     //Redirect to main act

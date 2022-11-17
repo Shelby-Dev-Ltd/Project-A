@@ -2,12 +2,14 @@ package com.example.projecta
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.view.LayoutInflater
@@ -23,6 +25,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import kotlinx.coroutines.NonCancellable.start
 import java.io.IOException
 import java.util.*
 
@@ -31,7 +34,11 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var appContext: Context
+    private val timer = Timer()
+    private lateinit var currActivity: Activity
 
+    //STOPWATCH
+    private lateinit var dataHelper: DataHelper
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,11 +51,19 @@ class HomeFragment : Fragment() {
 
     var fusedLocationProviderClient: FusedLocationProviderClient? = null
     var t1: TextToSpeech? = null
-
+var x = Date().time
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        currActivity = requireActivity()
         appContext = context?.applicationContext!!
+        dataHelper = DataHelper(appContext)
+
+
+        startAction()
+
+
+        timer.scheduleAtFixedRate(TimeTask(), 0,500)
 
         var button = binding.btn
         var button2 = binding.btn2
@@ -89,6 +104,8 @@ class HomeFragment : Fragment() {
             }
         })
 
+
+
         button2.setOnClickListener(View.OnClickListener {
             val text: String = address.getText().toString()
             t1!!.speak(text, TextToSpeech.QUEUE_FLUSH, null)
@@ -102,7 +119,101 @@ class HomeFragment : Fragment() {
 //                )
 //            )
 //        })
+
+
+
+        //STOPWATCH
+
+
+        if(dataHelper.timerCounting()) {
+            startTimer()
+        }
+        else {
+            stopTimer()
+            if(dataHelper.startTime() != null && dataHelper.stopTime() != null) {
+                val time = Date().time - calcRestartTime().time
+                binding.btnAlert.text = timeStringFromLong(time)
+
+            }
+        }
+
+
+
     }
+
+    private inner class TimeTask: TimerTask() {
+        override fun run() {
+            if(dataHelper.timerCounting()) {
+                val time = Date().time - x
+                currActivity.runOnUiThread(java.lang.Runnable {
+                    binding.btnAlert.text = timeStringFromLong(time)
+                })
+            }
+        }
+    }
+    private fun startAction() {
+        if(!dataHelper.timerCounting()){
+            startTimer()
+        }
+    }
+    private fun resetAction() {
+        dataHelper.setStopTime(null)
+        dataHelper.setStartTime(null)
+        stopTimer()
+        binding.btnAlert.text = timeStringFromLong(0)
+    }
+
+    private fun timeStringFromLong(ms: Long): String {
+        val seconds = (ms / 1000) % 60
+        val minutes = (ms / (1000 * 60) % 60)
+        val hours  = (ms / (1000 * 60 * 60) % 24)
+        return makeTimeString (hours, minutes, seconds)
+    }
+
+    private fun makeTimeString(hours: Long, minutes: Long, seconds: Long): String {
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    }
+
+    private fun stopTimer() {
+        dataHelper.setTimerCounting(false)
+    }
+
+    private fun startTimer() {
+        dataHelper.setTimerCounting(true)
+    }
+
+
+    private fun startStopAction() {
+        if(dataHelper.timerCounting()) {
+            dataHelper.setStopTime(Date())
+            stopTimer()
+        }
+        else {
+            if(dataHelper.stopTime() != null) {
+                dataHelper.setStartTime(calcRestartTime())
+                dataHelper.setStopTime(null)
+            }
+            else {
+                dataHelper.setStartTime(Date())
+            }
+            startTimer()
+        }
+    }
+
+    private fun calcRestartTime(): Date {
+        val diff = dataHelper.startTime()!!.time - dataHelper.stopTime()!!.time
+        return Date(System.currentTimeMillis() + diff)
+    }
+
+
+
+
+
+
+
+
+    //LOCATION
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -155,4 +266,11 @@ class HomeFragment : Fragment() {
                 }
             })
     }
+
+
+
+
+
+
+
 }

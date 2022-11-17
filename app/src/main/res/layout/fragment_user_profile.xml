@@ -171,8 +171,8 @@
             android:layout_below="@id/no_hp2"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:text="Email                                         : "
             android:inputType="text"
+            android:text="Email                                         : "
             android:textAlignment="center"
             android:textSize="16dp" />
 
@@ -183,6 +183,28 @@
             android:layout_below="@+id/u_emerg2"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/email"
+            android:text="___________"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/nohp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/email"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:text="No HP                                       : "
+            android:textAlignment="center"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/u_nohp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/u_email"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/nohp"
             android:text="___________"
             android:textSize="16dp" />
 

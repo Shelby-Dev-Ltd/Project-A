@@ -51,7 +51,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:background="@drawable/rounded"
-            android:backgroundTint="#FFFFFF" />
+            android:backgroundTint="#FFFFFF"
+            android:text="Time"/>
     </RelativeLayout>
 
 

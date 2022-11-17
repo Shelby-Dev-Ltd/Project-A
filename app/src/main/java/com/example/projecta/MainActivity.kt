@@ -45,30 +45,23 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.*
+import com.example.projecta.DataHelper
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var sensorManager: SensorManager
-    private lateinit var square: TextView
-    private lateinit var mFusedLocationClient: FusedLocationProviderClient
-    private val permissionId = 2
-    private lateinit var tts: TextToSpeech
-    private lateinit var latitude: TextView
-    private lateinit var longitude: TextView
-    private lateinit var country: TextView
-    private lateinit var city: TextView
-    private lateinit var address: TextView
-    private lateinit var btnSpeak: Button
-    private lateinit var button: Button
-    private lateinit var btnLocation: Button
 
+    lateinit var dataHelper: DataHelper
     private lateinit var auth: FirebaseAuth
 
+
+    private var x = Date().time
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        dataHelper = DataHelper(applicationContext)
+
 
         // Initialize Firebase Auth
         auth = Firebase.auth
@@ -119,6 +112,13 @@ class MainActivity : AppCompatActivity() {
             return super.onOptionsItemSelected(item)
         }
     }
-
+    private fun startTimer() {
+        dataHelper.setTimerCounting(true)
+    }
+    private fun startAction() {
+        if(!dataHelper.timerCounting()){
+            startTimer()
+        }
+    }
 
 }
