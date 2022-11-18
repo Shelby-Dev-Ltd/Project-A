@@ -75,7 +75,7 @@
                 android:layout_marginLeft="45dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/ttl"
+                android:layout_toLeftOf="@+id/u_birth"
                 android:src="@drawable/card" />
 
             <EditText
@@ -208,7 +208,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="45dp"
-                android:layout_toLeftOf="@+id/namalengkap"
+                android:layout_toLeftOf="@+id/u_name"
                 android:src="@drawable/ic_baseline_phone_android_24" />
 
             <EditText
@@ -226,8 +226,9 @@
                 android:id="@+id/btn_signup"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/u_nohp"
+                android:layout_below="@id/u_number"
                 android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/rounded"
                 android:onClick="signup"
