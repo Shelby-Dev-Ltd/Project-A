@@ -16,15 +16,22 @@ import androidx.core.app.NotificationCompat
 import com.example.projecta.MainActivity
 import com.example.projecta.R
 import com.example.projecta.Constants
+import com.example.projecta.DataHelper
+import java.util.*
 
 class Service : Service() {
 
     private var c = Constants
     private var isRunning:Boolean = false
+    lateinit var dataHelper: DataHelper
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(init: Intent, flag: Int, startId: Int): Int {
         if(!isRunning){
+            var x = Date().time
+            dataHelper = DataHelper(applicationContext)
+
+
             startForegroundService()
             isRunning = true
         } else{
