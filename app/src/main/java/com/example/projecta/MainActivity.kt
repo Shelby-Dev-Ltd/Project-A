@@ -1,51 +1,19 @@
 package com.example.projecta
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Context.SENSOR_SERVICE
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Color
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
-import android.location.LocationManager
-import android.os.Build.VERSION_CODES.P
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
-import android.speech.tts.TextToSpeech
-import android.util.Log
-import android.view.Gravity
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.motion.widget.Debug.getLocation
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.projecta.databinding.ActivityMainBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.*
-import com.example.projecta.DataHelper
+import com.example.projecta.services.Service
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -56,11 +24,24 @@ class MainActivity : AppCompatActivity() {
 
 
     private var x = Date().time
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         dataHelper = DataHelper(applicationContext)
+
+
+        //Services
+
+        val intent = Intent(this@MainActivity, Service::class.java) // Build the intent for the service
+        applicationContext.startForegroundService(intent)
+
+
+
+
+
+
 
 
         // Initialize Firebase Auth
