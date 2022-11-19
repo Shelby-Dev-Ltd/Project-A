@@ -8,15 +8,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -26,7 +24,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import kotlinx.coroutines.NonCancellable.start
 import java.io.IOException
 import java.util.*
 
@@ -145,10 +142,19 @@ var x = Date().time
     private inner class TimeTask: TimerTask() {
         override fun run() {
             if(dataHelper.timerCounting()) {
-                val time = Date().time - Service.TIME_START
+                val time = Date().time - Service.x
                 Service.CURR_TIME = time
+
+                val interval = 10000
+
                 currActivity.runOnUiThread(java.lang.Runnable {
                     binding.btnAlert.text = timeStringFromLong(time)
+                    if(time.toInt() >= interval){
+                        Service.x = Date().time
+                        alert()
+                    }
+
+
                 })
             }
         }
@@ -269,7 +275,12 @@ var x = Date().time
             })
     }
 
-
+    private fun alert(){
+        val callIntent = Intent(Intent.ACTION_CALL)
+        val number:String = "085162847477"
+        callIntent.data = Uri.parse("tel:" + number) //change the number
+        startActivity(callIntent)
+    }
 
 
 

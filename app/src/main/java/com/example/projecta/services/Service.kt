@@ -23,7 +23,6 @@ class Service : Service() {
 
     private var c = Constants
     private var isRunning:Boolean = false
-    var x = Date().time
     lateinit var notificationManager: NotificationManager
     lateinit var notificationBuilder: NotificationCompat.Builder
     lateinit var handler: Handler
@@ -31,11 +30,6 @@ class Service : Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(init: Intent, flag: Int, startId: Int): Int {
         if(!isRunning){
-
-            TIME_START = x
-
-
-
             startForegroundService()
             isRunning = true
         } else{
@@ -117,7 +111,7 @@ private fun startForegroundService(){
     }
 
     companion object{
-        var TIME_START:Long = Date().time
         var CURR_TIME:Long = Date().time
+        var x:Long = Date().time
     }
 }
