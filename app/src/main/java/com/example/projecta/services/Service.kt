@@ -1,5 +1,6 @@
 package com.example.projecta.services
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
@@ -8,16 +9,19 @@ import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
-import android.os.CountDownTimer
 import android.os.Handler
 import android.os.IBinder
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import com.example.projecta.*
+import com.example.projecta.Constants
+import com.example.projecta.MainActivity
+import com.example.projecta.R
 import java.util.*
+
 
 class Service : Service() {
 
@@ -26,9 +30,9 @@ class Service : Service() {
     lateinit var notificationManager: NotificationManager
     lateinit var notificationBuilder: NotificationCompat.Builder
     lateinit var handler: Handler
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(init: Intent, flag: Int, startId: Int): Int {
+
         if(!isRunning){
             startForegroundService()
             isRunning = true
@@ -113,5 +117,7 @@ private fun startForegroundService(){
     companion object{
         var CURR_TIME:Long = Date().time
         var x:Long = Date().time
+        var address:String = "Address template"
     }
+
 }

@@ -3,20 +3,29 @@ package com.example.projecta
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
+import android.telephony.SmsManager
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.projecta.databinding.FragmentHomeBinding
 import com.example.projecta.services.Service
@@ -34,6 +43,7 @@ class HomeFragment : Fragment() {
     private lateinit var appContext: Context
     private val timer = Timer()
     private lateinit var currActivity: Activity
+    private val permissionRequest = 101
 
     //STOPWATCH
     private lateinit var dataHelper: DataHelper
@@ -49,7 +59,7 @@ class HomeFragment : Fragment() {
 
     var fusedLocationProviderClient: FusedLocationProviderClient? = null
     var t1: TextToSpeech? = null
-var x = Date().time
+    var x = Date().time
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,11 +67,15 @@ var x = Date().time
         appContext = context?.applicationContext!!
         dataHelper = DataHelper(appContext)
 
-
         startAction()
 
+        val handler = Handler()
+        handler.postDelayed(Runnable { // Do something after 5s = 5000ms
+            getLocation()
+        }, 500)
 
-        timer.scheduleAtFixedRate(TimeTask(), 0,500)
+
+        timer.scheduleAtFixedRate(TimeTask(), 0, 500)
 
         var button = binding.btn
         var button2 = binding.btn2
@@ -69,7 +83,14 @@ var x = Date().time
         var address = binding.address
 
         t1 = TextToSpeech(appContext,
-            OnInitListener { i -> if (i != TextToSpeech.ERROR) t1?.setLanguage(Locale("id", "ID")) })
+            OnInitListener { i ->
+                if (i != TextToSpeech.ERROR) t1?.setLanguage(
+                    Locale(
+                        "id",
+                        "ID"
+                    )
+                )
+            })
 
         //Initialize fusedLocationProviderClient
 
@@ -79,11 +100,10 @@ var x = Date().time
         button.setOnClickListener(View.OnClickListener { //Check permission
 
             if (
-                    ActivityCompat.checkSelfPermission(
-                        appContext
-                        ,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
+                ActivityCompat.checkSelfPermission(
+                    appContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(
                     appContext,
                     Manifest.permission.ACCESS_COARSE_LOCATION
@@ -119,16 +139,14 @@ var x = Date().time
 //        })
 
 
-
         //STOPWATCH
 
 
-        if(dataHelper.timerCounting()) {
+        if (dataHelper.timerCounting()) {
             startTimer()
-        }
-        else {
+        } else {
             stopTimer()
-            if(dataHelper.startTime() != null && dataHelper.stopTime() != null) {
+            if (dataHelper.startTime() != null && dataHelper.stopTime() != null) {
                 val time = Date().time - calcRestartTime().time
                 binding.btnAlert.text = timeStringFromLong(time)
 
@@ -136,22 +154,36 @@ var x = Date().time
         }
 
 
-
     }
 
-    private inner class TimeTask: TimerTask() {
+    private inner class TimeTask : TimerTask() {
         override fun run() {
-            if(dataHelper.timerCounting()) {
+            if (dataHelper.timerCounting()) {
                 val time = Date().time - Service.x
                 Service.CURR_TIME = time
 
-                val interval = 10000
+                val interval = 5000
 
                 currActivity.runOnUiThread(java.lang.Runnable {
                     binding.btnAlert.text = timeStringFromLong(time)
-                    if(time.toInt() >= interval){
-                        Service.x = Date().time
-                        alert()
+                    if (time.toInt() >= interval) {
+                        stopTimer()
+
+                        AlertDialog.Builder(requireContext())
+                            .setMessage("Are you still there??")
+                            .setPositiveButton(
+                                "Yes",
+                                DialogInterface.OnClickListener { dialogInterface, i ->
+                                    Service.x = Date().time
+                                    startTimer()
+                                })
+                            .create()
+                            .show()
+                        val handler = Handler()
+                        handler.postDelayed(Runnable { // Do something after 5s = 5000ms
+                            alert()
+                        }, 5000)
+
                     }
 
 
@@ -159,11 +191,13 @@ var x = Date().time
             }
         }
     }
+
     private fun startAction() {
-        if(!dataHelper.timerCounting()){
+        if (!dataHelper.timerCounting()) {
             startTimer()
         }
     }
+
     private fun resetAction() {
         dataHelper.setStopTime(null)
         dataHelper.setStartTime(null)
@@ -174,8 +208,8 @@ var x = Date().time
     fun timeStringFromLong(ms: Long): String {
         val seconds = (ms / 1000) % 60
         val minutes = (ms / (1000 * 60) % 60)
-        val hours  = (ms / (1000 * 60 * 60) % 24)
-        return makeTimeString (hours, minutes, seconds)
+        val hours = (ms / (1000 * 60 * 60) % 24)
+        return makeTimeString(hours, minutes, seconds)
     }
 
     private fun makeTimeString(hours: Long, minutes: Long, seconds: Long): String {
@@ -193,16 +227,14 @@ var x = Date().time
 
 
     private fun startStopAction() {
-        if(dataHelper.timerCounting()) {
+        if (dataHelper.timerCounting()) {
             dataHelper.setStopTime(Date())
             stopTimer()
-        }
-        else {
-            if(dataHelper.stopTime() != null) {
+        } else {
+            if (dataHelper.stopTime() != null) {
                 dataHelper.setStartTime(calcRestartTime())
                 dataHelper.setStopTime(null)
-            }
-            else {
+            } else {
                 dataHelper.setStartTime(Date())
             }
             startTimer()
@@ -213,12 +245,6 @@ var x = Date().time
         val diff = dataHelper.startTime()!!.time - dataHelper.stopTime()!!.time
         return Date(System.currentTimeMillis() + diff)
     }
-
-
-
-
-
-
 
 
     //LOCATION
@@ -245,7 +271,7 @@ var x = Date().time
             ?.addOnCompleteListener(object : OnCompleteListener<Location?> {
                 override fun onComplete(task: Task<Location?>) {
                     //Initialize location
-                    val location: Location? = task.getResult()
+                    val location: Location? = task.result
                     if (location != null) {
                         try {
                             //Initialize geoCoder
@@ -257,6 +283,8 @@ var x = Date().time
                             val addresses = geocoder.getFromLocation(
                                 location.latitude, location.longitude, 1
                             )
+                            Service.address = addresses[0].getAddressLine(0)
+
                             //Set latitude on TextView
                             binding.latitude.setText("Latitude: " + addresses[0].latitude)
                             //Set longitude on TextView
@@ -275,15 +303,42 @@ var x = Date().time
             })
     }
 
-    private fun alert(){
+    private fun alert() {
         val callIntent = Intent(Intent.ACTION_CALL)
-        val number:String = "085162847477"
+        val number = "085162847477"
+        val smsManager: SmsManager
+        val sentPI: PendingIntent
         callIntent.data = Uri.parse("tel:" + number) //change the number
         startActivity(callIntent)
+        sendMessage()
+
+
     }
 
-
-
-
-
+    fun sendMessage() {
+        val permissionCheck = ContextCompat.checkSelfPermission(appContext, Manifest.permission.SEND_SMS)
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            myMessage()
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.SEND_SMS),
+                permissionRequest)
+        }
+    }
+    private fun myMessage() {
+        val number = "085162847477"
+        val msg  = "Project A has detected no response in the corresponding time. At " + Service.address
+        if (number == "" || msg == "") {
+            Toast.makeText(appContext, "Field cannot be empty", Toast.LENGTH_SHORT).show()
+        } else {
+            if (TextUtils.isDigitsOnly(number)) {
+                val smsManager: SmsManager = SmsManager.getDefault()
+                smsManager.sendTextMessage(number, null, msg, null, null)
+                Toast.makeText(appContext, "Message Sent", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(appContext, "Please enter the correct number", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }
+
+

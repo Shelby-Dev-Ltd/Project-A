@@ -12,11 +12,14 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <!--SMS NOTIFICATION-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <!-- Needed only if your calling app reads numbers from the `PHONE_STATE`
          intent action. The maxSdkVersion attribute is needed only if your
          calling app uses the getLine1Number() or getMsisdn() methods. -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"
-        android:maxSdkVersion="29"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <!-- Needed only if your calling app uses the getLine1Number() or
          getMsisdn() methods. -->
