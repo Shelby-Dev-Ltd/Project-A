@@ -9,27 +9,31 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.CountDownTimer
+import android.os.Handler
 import android.os.IBinder
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import com.example.projecta.MainActivity
-import com.example.projecta.R
-import com.example.projecta.Constants
-import com.example.projecta.DataHelper
+import com.example.projecta.*
 import java.util.*
 
 class Service : Service() {
 
     private var c = Constants
     private var isRunning:Boolean = false
-    lateinit var dataHelper: DataHelper
+    var x = Date().time
+    lateinit var notificationManager: NotificationManager
+    lateinit var notificationBuilder: NotificationCompat.Builder
+    lateinit var handler: Handler
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(init: Intent, flag: Int, startId: Int): Int {
         if(!isRunning){
-            var x = Date().time
-            dataHelper = DataHelper(applicationContext)
+
+            TIME_START = x
+
 
 
             startForegroundService()
@@ -50,22 +54,35 @@ class Service : Service() {
     }
 
 private fun startForegroundService(){
-    val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
+    handler = Handler()
+    var runnable: Runnable? = null
+    var delay = 1000
+  
+
+    notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
             as NotificationManager
 
     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
         createNotificationChannel(notificationManager)
     }
 
-    val notificationBuilder = NotificationCompat.Builder(this, c.NOTIFICATION_CHANNEL_ID )
+    notificationBuilder = NotificationCompat.Builder(this, c.NOTIFICATION_CHANNEL_ID )
         .setAutoCancel(false)
         .setOngoing(true)
         .setSmallIcon(R.drawable.projecta_logo_crop)
         .setContentTitle("Running App")
-        .setContentText("00:00:00")
+        .setContentText("TIME")
         .setContentIntent(getMainActivityPendingIntent())
 
     startForeground(c.NOTIFICATION_ID, notificationBuilder.build()  )
+
+    handler.postDelayed(Runnable {
+        handler.postDelayed(runnable!!, delay.toLong())
+        notificationBuilder.setContentText(timeStringFromLong(CURR_TIME))
+        notificationManager.notify(c.NOTIFICATION_ID, notificationBuilder.build())
+    }.also { runnable = it }, delay.toLong())
+
+
 }
 
     private fun getMainActivityPendingIntent() = PendingIntent.getActivity(
@@ -85,5 +102,22 @@ private fun startForegroundService(){
             IMPORTANCE_LOW
         )
         notificationManager.createNotificationChannel(channel)
+    }
+
+    fun timeStringFromLong(ms: Long): String {
+        val seconds = (ms / 1000) % 60
+        val minutes = (ms / (1000 * 60) % 60)
+        val hours  = (ms / (1000 * 60 * 60) % 24)
+        return makeTimeString (hours, minutes, seconds)
+    }
+
+    private fun makeTimeString(hours: Long, minutes: Long, seconds: Long): String {
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    }
+
+    companion object{
+        var TIME_START:Long = Date().time
+        var CURR_TIME:Long = Date().time
     }
 }

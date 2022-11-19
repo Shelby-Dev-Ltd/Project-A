@@ -21,6 +21,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.projecta.databinding.FragmentHomeBinding
+import com.example.projecta.services.Service
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
@@ -144,7 +145,8 @@ var x = Date().time
     private inner class TimeTask: TimerTask() {
         override fun run() {
             if(dataHelper.timerCounting()) {
-                val time = Date().time - x
+                val time = Date().time - Service.TIME_START
+                Service.CURR_TIME = time
                 currActivity.runOnUiThread(java.lang.Runnable {
                     binding.btnAlert.text = timeStringFromLong(time)
                 })
@@ -163,7 +165,7 @@ var x = Date().time
         binding.btnAlert.text = timeStringFromLong(0)
     }
 
-    private fun timeStringFromLong(ms: Long): String {
+    fun timeStringFromLong(ms: Long): String {
         val seconds = (ms / 1000) % 60
         val minutes = (ms / (1000 * 60) % 60)
         val hours  = (ms / (1000 * 60 * 60) % 24)
