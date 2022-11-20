@@ -6,6 +6,7 @@ import android.app.NotificationManager.IMPORTANCE_LOW
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.app.Service
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -15,6 +16,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.projecta.Constants
 import com.example.projecta.MainActivity
 import com.example.projecta.R
@@ -99,6 +101,10 @@ private fun startForegroundService(){
         handler.postDelayed(runnable!!, delay.toLong())
         notificationBuilder.setContentText(timeStringFromLong(CURR_TIME))
         notificationManager.notify(c.NOTIFICATION_ID, notificationBuilder.build())
+
+        if(CURR_TIME >= 5000){
+            Toast.makeText(applicationContext, "Go back to the application!", Toast.LENGTH_SHORT).show()
+        }
     }.also { runnable = it }, delay.toLong())
 
 
@@ -141,5 +147,6 @@ private fun startForegroundService(){
         var address:String = "Address template"
         var appAct:Activity = Activity()
     }
+
 
 }

@@ -107,7 +107,9 @@ class HomeFragment : Fragment() {
         binding.btnAlert.setOnClickListener{
             if(!dataHelper.timerCounting()){
                 Service.x = Date().time
-                startTimer()
+                startStopAction()
+            } else{
+                startStopAction()
             }
         }
 
@@ -204,7 +206,9 @@ class HomeFragment : Fragment() {
                             val handler = Handler()
                             handler.postDelayed(Runnable { // Do something after 5s = 5000ms
                                 if(!isThere){
-                                    alert()
+//                                    alert()
+                                    Toast.makeText(appContext, "Calling", Toast.LENGTH_SHORT).show()
+
                                 }
                             }, 5000)
                         }
@@ -306,7 +310,7 @@ class HomeFragment : Fragment() {
                             val addresses = geocoder.getFromLocation(
                                 location.latitude, location.longitude, 1
                             )
-                            Service.address = addresses[0].getAddressLine(0)
+                            address = addresses[0].getAddressLine(0)
 
 //                            //Set latitude on TextView
 //                            binding.latitude.setText("Latitude: " + addresses[0].latitude)
@@ -328,7 +332,7 @@ class HomeFragment : Fragment() {
 
     private fun alert() {
         val callIntent = Intent(Intent.ACTION_CALL)
-        val number = "089605931066"
+        val number = "gg"
         val smsManager: SmsManager
         val sentPI: PendingIntent
         callIntent.data = Uri.parse("tel:" + number) //change the number
@@ -348,8 +352,8 @@ class HomeFragment : Fragment() {
         }
     }
     private fun myMessage() {
-        val number = "089605931066"
-        val msg  = "ProjectAhasdetectednoresponseinthecorrespondingtimeAt" + Service.address
+        val number = "gg"
+        val msg  = address
         if (number == "" || msg == "") {
             Toast.makeText(appContext, "Field cannot be empty", Toast.LENGTH_SHORT).show()
         } else {

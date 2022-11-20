@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -46,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        dataHelper = DataHelper(applicationContext)
 
 
         //Services
@@ -70,6 +70,17 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+//        var done = false
+//        val i = 1
+//        while (i == 1 && !done){
+//            val handler = Handler()
+//            handler.postDelayed(Runnable { // Do something after 5s = 5000ms
+//                if(Service.CURR_TIME >= 5000){
+//                    replaceFragment(HomeFragment(), "Home")
+//                }
+//            }, 5000)
+//            done = true
+//        }
 
 
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
@@ -129,14 +140,6 @@ class MainActivity : AppCompatActivity() {
             return true
         } else {
             return super.onOptionsItemSelected(item)
-        }
-    }
-    private fun startTimer() {
-        dataHelper.setTimerCounting(true)
-    }
-    private fun startAction() {
-        if(!dataHelper.timerCounting()){
-            startTimer()
         }
     }
 
