@@ -13,7 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="#096ce3"></RelativeLayout>
+            android:background="@color/orange"></RelativeLayout>
 
 <!--        <ImageView-->
 <!--            android:id="@+id/back"-->
@@ -41,172 +41,178 @@
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="75dp"
-            android:background="@drawable/rounded2"/>
+            android:background="@drawable/rounded2"
+            app:backgroundTint="@color/dark_orange"
+            />
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </RelativeLayout>
-        <TextView
-            android:id="@+id/namalengkap"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/img"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="50dp"
-            android:inputType="text"
-            android:text="Nama Lengkap                      : "
-            android:textSize="16dp" />
+            android:layout_centerHorizontal="true"
 
-        <TextView
-            android:id="@+id/u_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/img"
-            android:layout_marginTop="50dp"
-            android:layout_toRightOf="@+id/namalengkap"
-            android:text="___________"
-            android:textSize="16dp" />
+            >
+            <TextView
+                android:id="@+id/namalengkap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="50dp"
+                android:inputType="text"
+                android:text="Nama Lengkap                      : "
+                android:textSize="16dp" />
 
-
-        <TextView
-            android:id="@+id/ttl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/namalengkap"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Tempat, Tanggal Lahir         : "
-            android:inputType="text"
-            android:textAlignment="center"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/u_birth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/u_name"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/ttl"
-            android:text="___________"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/nik"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ttl"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="NIK                                            : "
-            android:inputType="text"
-            android:textAlignment="center"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/u_nik"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/u_birth"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/nik"
-            android:text="___________"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/no_hp1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/nik"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Nomor HP orang terdekat 1: "
-            android:inputType="text"
-            android:textAlignment="center"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/u_emerg1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/u_nik"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/no_hp1"
-            android:text="___________"
-            android:textSize="16dp" />
+            <TextView
+                android:id="@+id/u_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="50dp"
+                android:layout_toRightOf="@+id/namalengkap"
+                android:text="___________"
+                android:textSize="16dp" />
 
 
-        <TextView
-            android:id="@+id/no_hp2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/no_hp1"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Nomor HP orang terdekat 2: "
-            android:inputType="text"
-            android:textAlignment="center"
-            android:textSize="16dp" />
+            <TextView
+                android:id="@+id/ttl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/namalengkap"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:inputType="text"
+                android:text="Tempat, Tanggal Lahir         : "
+                android:textAlignment="center"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/u_emerg2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/u_emerg1"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/no_hp2"
-            android:text="___________"
-            android:textSize="16dp" />
+            <TextView
+                android:id="@+id/u_birth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/u_name"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/ttl"
+                android:text="___________"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/no_hp2"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:inputType="text"
-            android:text="Email                                         : "
-            android:textAlignment="center"
-            android:textSize="16dp" />
+            <TextView
+                android:id="@+id/nik"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ttl"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="NIK                                            : "
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/u_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/u_emerg2"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/email"
-            android:text="___________"
-            android:textSize="16dp" />
+            <TextView
+                android:id="@+id/u_nik"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/u_birth"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/nik"
+                android:text="___________"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/nohp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/email"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:inputType="text"
-            android:text="No HP                                       : "
-            android:textAlignment="center"
-            android:textSize="16dp" />
+            <TextView
+                android:id="@+id/no_hp1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nik"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Nomor HP orang terdekat 1: "
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/u_nohp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/u_email"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/nohp"
-            android:text="___________"
-            android:textSize="16dp" />
+            <TextView
+                android:id="@+id/u_emerg1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/u_nik"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/no_hp1"
+                android:text="___________"
+                android:textSize="16dp" />
+
+
+            <TextView
+                android:id="@+id/no_hp2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/no_hp1"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Nomor HP orang terdekat 2: "
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/u_emerg2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/u_emerg1"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/no_hp2"
+                android:text="___________"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/no_hp2"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:inputType="text"
+                android:text="Email                                         : "
+                android:textAlignment="center"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/u_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/u_emerg2"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/email"
+                android:text="___________"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/nohp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/email"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:inputType="text"
+                android:text="No HP                                       : "
+                android:textAlignment="center"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/u_nohp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/u_email"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/nohp"
+                android:text="___________"
+                android:textSize="16dp" />
+        </RelativeLayout>
+
 
 
     </RelativeLayout>

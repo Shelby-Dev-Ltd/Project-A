@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         if(!hasPermissions(this, *PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
-
+        Service.appAct = this
 
 
         super.onCreate(savedInstanceState)
@@ -62,6 +63,12 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize Firebase Auth
         auth = Firebase.auth
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            Toast.makeText(this, "User authenticated!", Toast.LENGTH_SHORT)
+        } else{
+            replaceFragment(LoginFragment(), "Login")
+            return
+        }
 
 
 

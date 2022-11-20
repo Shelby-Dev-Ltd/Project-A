@@ -31,7 +31,7 @@ class LoginFragment : Fragment() {
 
         // Initialize Firebase Auth
         auth = Firebase.auth
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+        if(FirebaseAuth.getInstance().currentUser != null){
             var intent = Intent(requireActivity(), MainActivity::class.java)
             startActivity(intent)
         }

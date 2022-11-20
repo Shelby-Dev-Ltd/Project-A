@@ -1,10 +1,8 @@
 package com.example.projecta.services
 
 import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.*
 import android.app.NotificationManager.IMPORTANCE_LOW
-import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.app.Service
 import android.content.Context
@@ -30,9 +28,15 @@ class Service : Service() {
     lateinit var notificationManager: NotificationManager
     lateinit var notificationBuilder: NotificationCompat.Builder
     lateinit var handler: Handler
+
+//    var PERMISSION_ALL = 1
+//    var PERMISSIONS =
+//        arrayOf<String>(Manifest.permission.READ_CONTACTS, Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(init: Intent, flag: Int, startId: Int): Int {
-
+//        if(!hasPermissions(this, *PERMISSIONS)){
+//            ActivityCompat.requestPermissions(appAct, PERMISSIONS, PERMISSION_ALL);
+//        }
         if(!isRunning){
             startForegroundService()
             isRunning = true
@@ -51,7 +55,24 @@ class Service : Service() {
 
     }
 
+    fun hasPermissions(context: Context?, vararg permissions: String?): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (permission in permissions) {
+                if (ActivityCompat.checkSelfPermission(
+                        context,
+                        permission!!
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
 private fun startForegroundService(){
+
+
     handler = Handler()
     var runnable: Runnable? = null
     var delay = 1000
@@ -118,6 +139,7 @@ private fun startForegroundService(){
         var CURR_TIME:Long = Date().time
         var x:Long = Date().time
         var address:String = "Address template"
+        var appAct:Activity = Activity()
     }
 
 }

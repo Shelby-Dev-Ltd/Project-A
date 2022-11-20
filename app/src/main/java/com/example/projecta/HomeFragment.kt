@@ -24,15 +24,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.example.projecta.databinding.FragmentHomeBinding
 import com.example.projecta.services.Service
+import com.example.projecta.services.Service.Companion.address
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.io.IOException
 import java.util.*
 
@@ -44,9 +50,11 @@ class HomeFragment : Fragment() {
     private val timer = Timer()
     private lateinit var currActivity: Activity
     private val permissionRequest = 101
+    private lateinit var auth:FirebaseAuth
 
     //STOPWATCH
     private lateinit var dataHelper: DataHelper
+    var isTimeTask = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,13 +67,15 @@ class HomeFragment : Fragment() {
 
     var fusedLocationProviderClient: FusedLocationProviderClient? = null
     var t1: TextToSpeech? = null
-    var x = Date().time
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         currActivity = requireActivity()
         appContext = context?.applicationContext!!
         dataHelper = DataHelper(appContext)
+
+
+
 
         startAction()
 
@@ -74,13 +84,15 @@ class HomeFragment : Fragment() {
             getLocation()
         }, 500)
 
+        if(!isTimeTask){
+            timer.scheduleAtFixedRate(TimeTask(), 0, 500)
+            isTimeTask = true
+        }
 
-        timer.scheduleAtFixedRate(TimeTask(), 0, 500)
-
-        var button = binding.btn
-        var button2 = binding.btn2
-//        var button3 = binding.back
-        var address = binding.address
+//        var button = binding.btn
+//        var button2 = binding.btn2
+////        var button3 = binding.back
+//        var address = binding.address
 
         t1 = TextToSpeech(appContext,
             OnInitListener { i ->
@@ -92,42 +104,47 @@ class HomeFragment : Fragment() {
                 )
             })
 
-        //Initialize fusedLocationProviderClient
+        binding.btnAlert.setOnClickListener{
+            if(!dataHelper.timerCounting()){
+                Service.x = Date().time
+                startTimer()
+            }
+        }
 
         //Initialize fusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(appContext)
 
-        button.setOnClickListener(View.OnClickListener { //Check permission
-
-            if (
-                ActivityCompat.checkSelfPermission(
-                    appContext,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
-                    appContext,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                getLocation()
-            } else {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ),
-                    100
-                )
-            }
-        })
-
-
-
-        button2.setOnClickListener(View.OnClickListener {
-            val text: String = address.getText().toString()
-            t1!!.speak(text, TextToSpeech.QUEUE_FLUSH, null)
-        })
+//        button.setOnClickListener(View.OnClickListener { //Check permission
+//
+//            if (
+//                ActivityCompat.checkSelfPermission(
+//                    appContext,
+//                    Manifest.permission.ACCESS_FINE_LOCATION
+//                ) == PackageManager.PERMISSION_GRANTED
+//                && ActivityCompat.checkSelfPermission(
+//                    appContext,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION
+//                ) == PackageManager.PERMISSION_GRANTED
+//            ) {
+//                getLocation()
+//            } else {
+//                ActivityCompat.requestPermissions(
+//                    requireActivity(),
+//                    arrayOf(
+//                        Manifest.permission.ACCESS_FINE_LOCATION,
+//                        Manifest.permission.ACCESS_COARSE_LOCATION
+//                    ),
+//                    100
+//                )
+//            }
+//        })
+//
+//
+//
+//        button2.setOnClickListener(View.OnClickListener {
+//            val text: String = address.getText().toString()
+//            t1!!.speak(text, TextToSpeech.QUEUE_FLUSH, null)
+//        })
 
 //        button3.setOnClickListener(View.OnClickListener {
 //            startActivity(
@@ -154,6 +171,7 @@ class HomeFragment : Fragment() {
         }
 
 
+
     }
 
     private inner class TimeTask : TimerTask() {
@@ -163,10 +181,11 @@ class HomeFragment : Fragment() {
                 Service.CURR_TIME = time
 
                 val interval = 5000
+                var isThere:Boolean = false
 
                 currActivity.runOnUiThread(java.lang.Runnable {
                     binding.btnAlert.text = timeStringFromLong(time)
-                    if (time.toInt() >= interval) {
+                    if (time.toInt() >= interval && dataHelper.timerCounting()) {
                         stopTimer()
 
                         AlertDialog.Builder(requireContext())
@@ -176,15 +195,19 @@ class HomeFragment : Fragment() {
                                 DialogInterface.OnClickListener { dialogInterface, i ->
                                     Service.x = Date().time
                                     startTimer()
+                                    isThere = true
                                 })
                             .create()
                             .show()
-                        val handler = Handler()
-                        handler.postDelayed(Runnable { // Do something after 5s = 5000ms
-                            alert()
-                        }, 5000)
 
-                    }
+
+                            val handler = Handler()
+                            handler.postDelayed(Runnable { // Do something after 5s = 5000ms
+                                if(!isThere){
+                                    alert()
+                                }
+                            }, 5000)
+                        }
 
 
                 })
@@ -285,16 +308,16 @@ class HomeFragment : Fragment() {
                             )
                             Service.address = addresses[0].getAddressLine(0)
 
-                            //Set latitude on TextView
-                            binding.latitude.setText("Latitude: " + addresses[0].latitude)
-                            //Set longitude on TextView
-                            binding.longitude.setText("Longitude: " + addresses[0].longitude)
-                            //Set country on TextView
-                            binding.country.setText("Country: " + addresses[0].countryName)
-                            //Set city on TextView
-                            binding.city.setText("City: " + addresses[0].locality)
-                            //Set address on TextView
-                            binding.address.setText("Address: " + addresses[0].getAddressLine(0))
+//                            //Set latitude on TextView
+//                            binding.latitude.setText("Latitude: " + addresses[0].latitude)
+//                            //Set longitude on TextView
+//                            binding.longitude.setText("Longitude: " + addresses[0].longitude)
+//                            //Set country on TextView
+//                            binding.country.setText("Country: " + addresses[0].countryName)
+//                            //Set city on TextView
+//                            binding.city.setText("City: " + addresses[0].locality)
+//                            //Set address on TextView
+//                            binding.address.setText("Address: " + addresses[0].getAddressLine(0))
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
@@ -305,7 +328,7 @@ class HomeFragment : Fragment() {
 
     private fun alert() {
         val callIntent = Intent(Intent.ACTION_CALL)
-        val number = "085162847477"
+        val number = "089605931066"
         val smsManager: SmsManager
         val sentPI: PendingIntent
         callIntent.data = Uri.parse("tel:" + number) //change the number
@@ -325,8 +348,8 @@ class HomeFragment : Fragment() {
         }
     }
     private fun myMessage() {
-        val number = "085162847477"
-        val msg  = "Project A has detected no response in the corresponding time. At " + Service.address
+        val number = "089605931066"
+        val msg  = "ProjectAhasdetectednoresponseinthecorrespondingtimeAt" + Service.address
         if (number == "" || msg == "") {
             Toast.makeText(appContext, "Field cannot be empty", Toast.LENGTH_SHORT).show()
         } else {
