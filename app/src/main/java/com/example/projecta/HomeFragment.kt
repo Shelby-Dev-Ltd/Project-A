@@ -32,6 +32,9 @@ import androidx.fragment.app.Fragment
 import com.example.projecta.databinding.FragmentHomeBinding
 import com.example.projecta.services.Service
 import com.example.projecta.services.Service.Companion.address
+import com.example.projecta.services.Service.Companion.appAct
+import com.example.projecta.services.Service.Companion.called
+import com.example.projecta.services.Service.Companion.isThere
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
@@ -50,7 +53,7 @@ class HomeFragment : Fragment() {
     private val timer = Timer()
     private lateinit var currActivity: Activity
     private val permissionRequest = 101
-    private lateinit var auth:FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     //STOPWATCH
     private lateinit var dataHelper: DataHelper
@@ -73,7 +76,7 @@ class HomeFragment : Fragment() {
         currActivity = requireActivity()
         appContext = context?.applicationContext!!
         dataHelper = DataHelper(appContext)
-
+        appAct = requireActivity()
 
 
 
@@ -84,7 +87,7 @@ class HomeFragment : Fragment() {
             getLocation()
         }, 500)
 
-        if(!isTimeTask){
+        if (!isTimeTask) {
             timer.scheduleAtFixedRate(TimeTask(), 0, 500)
             isTimeTask = true
         }
@@ -104,11 +107,11 @@ class HomeFragment : Fragment() {
                 )
             })
 
-        binding.btnAlert.setOnClickListener{
-            if(!dataHelper.timerCounting()){
+        binding.btnAlert.setOnClickListener {
+            if (!dataHelper.timerCounting()) {
                 Service.x = Date().time
                 startStopAction()
-            } else{
+            } else {
                 startStopAction()
             }
         }
@@ -173,7 +176,6 @@ class HomeFragment : Fragment() {
         }
 
 
-
     }
 
     private inner class TimeTask : TimerTask() {
@@ -181,9 +183,8 @@ class HomeFragment : Fragment() {
             if (dataHelper.timerCounting()) {
                 val time = Date().time - Service.x
                 Service.CURR_TIME = time
-
+                isThere = false
                 val interval = 5000
-                var isThere:Boolean = false
 
                 currActivity.runOnUiThread(java.lang.Runnable {
                     binding.btnAlert.text = timeStringFromLong(time)
@@ -198,20 +199,19 @@ class HomeFragment : Fragment() {
                                     Service.x = Date().time
                                     startTimer()
                                     isThere = true
+                                    called = false
                                 })
                             .create()
                             .show()
 
 
-                            val handler = Handler()
-                            handler.postDelayed(Runnable { // Do something after 5s = 5000ms
-                                if(!isThere){
-//                                    alert()
-                                    Toast.makeText(appContext, "Calling", Toast.LENGTH_SHORT).show()
-
-                                }
-                            }, 5000)
-                        }
+                        val handler = Handler()
+                        handler.postDelayed(Runnable { // Do something after 5s = 5000ms
+                            if (!isThere) {
+                                Toast.makeText(appContext, "Calling", Toast.LENGTH_SHORT).show()
+                            }
+                        }, 5000)
+                    }
 
 
                 })
@@ -330,42 +330,7 @@ class HomeFragment : Fragment() {
             })
     }
 
-    private fun alert() {
-        val callIntent = Intent(Intent.ACTION_CALL)
-        val number = "gg"
-        val smsManager: SmsManager
-        val sentPI: PendingIntent
-        callIntent.data = Uri.parse("tel:" + number) //change the number
-        startActivity(callIntent)
-        sendMessage()
 
-
-    }
-
-    fun sendMessage() {
-        val permissionCheck = ContextCompat.checkSelfPermission(appContext, Manifest.permission.SEND_SMS)
-        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-            myMessage()
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.SEND_SMS),
-                permissionRequest)
-        }
-    }
-    private fun myMessage() {
-        val number = "gg"
-        val msg  = address
-        if (number == "" || msg == "") {
-            Toast.makeText(appContext, "Field cannot be empty", Toast.LENGTH_SHORT).show()
-        } else {
-            if (TextUtils.isDigitsOnly(number)) {
-                val smsManager: SmsManager = SmsManager.getDefault()
-                smsManager.sendTextMessage(number, null, msg, null, null)
-                Toast.makeText(appContext, "Message Sent", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(appContext, "Please enter the correct number", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 }
 
 
